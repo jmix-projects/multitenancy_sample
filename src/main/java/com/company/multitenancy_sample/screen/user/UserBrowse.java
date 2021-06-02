@@ -22,7 +22,7 @@ public class UserBrowse extends StandardLookup<User> {
             return;
         }
         username.setValueProvider(user -> {
-            String tenantId = user.getTenantId();
+            String tenantId = user.getTenantAttribute();
             if (tenantId != null) {
                 return user.getUsername().replace(tenantId+"\\","");
             }

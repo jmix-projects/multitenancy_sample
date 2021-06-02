@@ -46,8 +46,8 @@ public class User implements JmixUserDetails, TenantSupport {
     protected String lastName;
 
     @TenantId
-    @Column(name = "TENANT_ID")
-    protected String tenantId;
+    @Column(name = "TENANT_ATTRIBUTE")
+    protected String tenantAttribute;
 
     @Email
     @Column(name = "EMAIL")
@@ -161,12 +161,16 @@ public class User implements JmixUserDetails, TenantSupport {
                 (lastName != null ? lastName : ""), username).trim();
     }
 
-    @Override
-    public String getTenantId() {
-        return tenantId;
+    public String getTenantAttribute() {
+        return tenantAttribute;
     }
 
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
+    public void setTenantAttribute(String tenantAttribute) {
+        this.tenantAttribute = tenantAttribute;
+    }
+
+    @Override
+    public String getTenantId() {
+        return tenantAttribute;
     }
 }

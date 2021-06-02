@@ -7,18 +7,13 @@ import io.jmix.multitenancy.entity.Tenant;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.component.ComboBox;
 import io.jmix.ui.component.PasswordField;
-import io.jmix.ui.component.SuggestionField;
 import io.jmix.ui.component.TextField;
-import io.jmix.ui.model.CollectionContainer;
-import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -73,7 +68,7 @@ public class UserEdit extends StandardEditor<User> {
 
     @Subscribe
     public void onAfterShow(AfterShowEvent event) {
-        String tenantId = getEditedEntity().getTenantId();
+        String tenantId = getEditedEntity().getTenantAttribute();
         if (tenantId != null) {
             usernameField.setValue(getEditedEntity().getUsername().replace(tenantId+"\\",""));
         }
@@ -91,7 +86,7 @@ public class UserEdit extends StandardEditor<User> {
             getEditedEntity().setPassword(passwordEncoder.encode(passwordField.getValue()));
         }
         User editedEntity = getEditedEntity();
-        String tenantId = editedEntity.getTenantId();
+        String tenantId = editedEntity.getTenantAttribute();
         if (!Strings.isBlank(tenantId) && !editedEntity.getUsername().contains(tenantId.trim())) {
             editedEntity.setUsername(String.format("%s%s%s", tenantId, "\\", editedEntity.getUsername()));
         }
