@@ -9,15 +9,15 @@ Steps for getting multitenancy project from empty Jmix project:
 
 ```groovy
     implementation 'io.jmix.multitenancy:jmix-multitenancy-starter'
-implementation 'io.jmix.multitenancy:jmix-multitenancy-ui-starter'
+    implementation 'io.jmix.multitenancy:jmix-multitenancy-ui-starter'
 ```
 
 2. Add attribute in UserEntity which will be tenant Id, it must have String type and annotation TenantId. For example
 
 ```java
     @TenantId
-@Column(name = "TENANT_ATTRIBUTE")
-protected String tenantAttribute;
+    @Column(name = "TENANT_ATTRIBUTE")
+    protected String tenantAttribute;
 ```
 
 3. Implement interface TenantSupport in UserEntity. Method implementation from interface must return value of attribute
@@ -25,127 +25,124 @@ protected String tenantAttribute;
 
 ```java
     @Override
-public String getTenantId(){
+    public String getTenantId(){
         return tenantAttribute;
-        }
+    }
 ```
 
 4. Add following code in the end onBeforeCommit handler from UserEdit class
 
 ```java
     User editedEntity=getEditedEntity();
-        String tenantId=editedEntity.getTenantId();
-        if(!Strings.isBlank(tenantId)&&!editedEntity.getUsername().contains(tenantId.trim())){
+    String tenantId=editedEntity.getTenantId();
+    if(!Strings.isBlank(tenantId)&&!editedEntity.getUsername().contains(tenantId.trim())){
         editedEntity.setUsername(String.format("%s%s%s",tenantId,"\\",editedEntity.getUsername()));
-        }
+    }
 ```
 
 5. Add method in UserEdit class
 
 ```java
     @Subscribe
-public void onAfterShow(AfterShowEvent event){
+    public void onAfterShow(AfterShowEvent event){
         String tenantId=getEditedEntity().getTenantId();
         if(tenantId!=null){
-        usernameField.setValue(getEditedEntity().getUsername().replace(tenantId+"\\",""));
+            usernameField.setValue(getEditedEntity().getUsername().replace(tenantId+"\\",""));
         }
-        }
+    }
 ```
 
 6. Add following code in UserBrowse class
 
 ```java
     @Autowired
-private GroupTable<User> usersTable;
-@Subscribe
-public void onBeforeShow(BeforeShowEvent event){
+    private GroupTable<User> usersTable;
+    @Subscribe
+    public void onBeforeShow(BeforeShowEvent event){
         Table.Column<User> username=usersTable.getColumn("username");
         if(username==null){
-        return;
+            return;
         }
         username.setValueProvider(user->{
-        String tenantId=user.getTenantId();
-        if(tenantId!=null){
-        return user.getUsername().replace(tenantId+"\\","");
-        }
-        return user.getUsername();
+            String tenantId=user.getTenantId();
+            if(tenantId!=null){
+                return user.getUsername().replace(tenantId+"\\","");
+            }
+            return user.getUsername();
         });
-        }
+    }
 ```
 
 7. Add following code in LoginScreen class
 
 ```java
     @Autowired
-private MultitenancyProperties multitenancyProperties;
+    private MultitenancyProperties multitenancyProperties;
 
-@Autowired
-private UrlRouting urlRouting;
+    @Autowired
+    private UrlRouting urlRouting;
 ```
 
 8. Add code into 'login' method from LoginScreen class before try-catch block
 
 ```java
     String tenantId=null;
-        Map<String, String> params=urlRouting.getState().getParams();
-        if(multitenancyProperties.isAuthenticationByTenantParamEnabled()&&params!=null){
+    Map<String, String> params=urlRouting.getState().getParams();
+    if(multitenancyProperties.isAuthenticationByTenantParamEnabled()&&params!=null){
         tenantId=params.get(multitenancyProperties.getTenantIdUrlParamName());
-        }
-        if(tenantId!=null){
+    }
+    if(tenantId!=null){
         username=String.format("%s%s%s",tenantId,"\\",username);
-        }
+    }
 ```
 
 9. Add combobox for tenant in user-edit.xml
 
 ```xml
-
-<comboBox id="tenantIdField" property="tenantAttribute"/>
+    <comboBox id="tenantIdField" property="tenantAttribute"/>
 ```
 
 10. Add code in UserEdit class
 
 ```java
     @Autowired
-private ComboBox<String> tenantIdField;
-@Autowired
-private TenantRepository tenantRepository;
-@Subscribe
-public void onInit(InitEvent event){
+    private ComboBox<String> tenantIdField;
+    @Autowired
+    private TenantRepository tenantRepository;
+    @Subscribe
+    public void onInit(InitEvent event){
         tenantIdField.setOptionsList(tenantRepository.findAll()
         .stream()
         .map(Tenant::getTenantId)
-        .collect(Collectors.toList())
-        );
-        }
+        .collect(Collectors.toList()));
+    }
 ```
 
 11. Add column into table in user-browse.xml
 
 ```xml
-
-<column id="tenantAttribute"/>
+    <column id="tenantAttribute"/>
 ```
 
 12. Add code in UserBrowse class
 
 ```java
     @Autowired
-private GroupTable<User> usersTable;
-@Subscribe
-public void onBeforeShow(BeforeShowEvent event){
+    private GroupTable<User> usersTable;
+    @Subscribe
+    public void onBeforeShow(BeforeShowEvent event){
         Table.Column<User> username=usersTable.getColumn("username");
         if(username==null){
-        return;
+            return;
         }
         username.setValueProvider(user->{
-        String tenantId=user.getTenantId();
-        if(tenantId!=null){
-        return user.getUsername().replace(tenantId+"\\","");
-        }
-        return user.getUsername();
+           String tenantId=user.getTenantId();
+           if(tenantId!=null){
+               return user.getUsername().replace(tenantId+"\\","");
+           }
+          return user.getUsername();
         });
-        }
+    }
 ```
 
 Now you can run your application, create tenant-specific entities, create roles for the entities, assignment roles for
