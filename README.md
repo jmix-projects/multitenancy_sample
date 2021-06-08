@@ -108,10 +108,12 @@ Steps for getting multitenancy project from empty Jmix project:
     @Autowired
     private ComboBox<String> tenantIdField;
     @Autowired
-    private TenantRepository tenantRepository;
+    private DataManager dataManager;
     @Subscribe
     public void onInit(InitEvent event){
-        tenantIdField.setOptionsList(tenantRepository.findAll()
+        tenantIdField.setOptionsList(dataManager.load(Tenant.class)
+        .query("select t from mten_Tenant t")
+        .list()
         .stream()
         .map(Tenant::getTenantId)
         .collect(Collectors.toList()));

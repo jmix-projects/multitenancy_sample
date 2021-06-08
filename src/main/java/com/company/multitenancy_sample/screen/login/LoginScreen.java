@@ -4,6 +4,7 @@ import io.jmix.core.CoreProperties;
 import io.jmix.core.MessageTools;
 import io.jmix.core.Messages;
 import io.jmix.multitenancy.MultitenancyProperties;
+import io.jmix.multitenancy.core.TenantEntityOperation;
 import io.jmix.securityui.authentication.AuthDetails;
 import io.jmix.securityui.authentication.LoginScreenAuthenticationSupport;
 import io.jmix.ui.Notifications;
@@ -14,7 +15,10 @@ import io.jmix.ui.component.PasswordField;
 import io.jmix.ui.component.TextField;
 import io.jmix.ui.navigation.Route;
 import io.jmix.ui.navigation.UrlRouting;
-import io.jmix.ui.screen.*;
+import io.jmix.ui.screen.Screen;
+import io.jmix.ui.screen.Subscribe;
+import io.jmix.ui.screen.UiController;
+import io.jmix.ui.screen.UiDescriptor;
 import io.jmix.ui.security.UiLoginProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +66,9 @@ public class LoginScreen extends Screen {
 
     @Autowired
     private MultitenancyProperties multitenancyProperties;
+
+    @Autowired
+    private TenantEntityOperation tenantEntityOperation;
 
     @Autowired
     private UrlRouting urlRouting;

@@ -1,8 +1,8 @@
 package com.company.multitenancy_sample.screen.user;
 
 import com.company.multitenancy_sample.entity.User;
+import io.jmix.core.DataManager;
 import io.jmix.core.EntityStates;
-import io.jmix.multitenancy.data.TenantRepository;
 import io.jmix.multitenancy.entity.Tenant;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.component.ComboBox;
@@ -39,7 +39,7 @@ public class UserEdit extends StandardEditor<User> {
     private ComboBox<String> tenantIdField;
 
     @Autowired
-    private TenantRepository tenantRepository;
+    private DataManager dataManager;
 
     @Autowired
     private PasswordField confirmPasswordField;
@@ -59,7 +59,9 @@ public class UserEdit extends StandardEditor<User> {
 
     @Subscribe
     public void onInit(InitEvent event) {
-        tenantIdField.setOptionsList(tenantRepository.findAll()
+        tenantIdField.setOptionsList(dataManager.load(Tenant.class)
+                .query("select t from mten_Tenant t")
+                .list()
                 .stream()
                 .map(Tenant::getTenantId)
                 .collect(Collectors.toList())
