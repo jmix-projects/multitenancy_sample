@@ -2,7 +2,7 @@
 <project version="4">
   <component name="JmixDataStoreSettingsManager">
     <moduleSettings>
-      <entry key="com.company.multitenancy_sample.main">
+      <entry key="multitenancy_sample.main">
         <ModuleSettings>
           <option name="dataStoreOptions">
             <map>

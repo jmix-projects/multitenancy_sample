@@ -6,7 +6,7 @@ import io.jmix.core.Messages;
 import io.jmix.multitenancy.MultitenancyProperties;
 import io.jmix.multitenancy.core.TenantEntityOperation;
 import io.jmix.securityui.authentication.AuthDetails;
-import io.jmix.securityui.authentication.LoginScreenAuthenticationSupport;
+import io.jmix.securityui.authentication.LoginScreenSupport;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.action.Action;
 import io.jmix.ui.component.CheckBox;
@@ -56,7 +56,7 @@ public class LoginScreen extends Screen {
     private MessageTools messageTools;
 
     @Autowired
-    private LoginScreenAuthenticationSupport authenticationSupport;
+    private LoginScreenSupport authenticationSupport;
 
     @Autowired
     private CoreProperties coreProperties;
