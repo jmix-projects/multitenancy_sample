@@ -3,8 +3,7 @@ package com.company.multitenancy_sample.screen.login;
 import io.jmix.core.CoreProperties;
 import io.jmix.core.MessageTools;
 import io.jmix.core.Messages;
-import io.jmix.multitenancy.MultitenancyProperties;
-import io.jmix.multitenancy.core.TenantEntityOperation;
+import io.jmix.multitenancyui.helper.MultitenancyUsernameSupport;
 import io.jmix.securityui.authentication.AuthDetails;
 import io.jmix.securityui.authentication.LoginScreenSupport;
 import io.jmix.ui.Notifications;
@@ -27,7 +26,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 
 import java.util.Locale;
-import java.util.Map;
 
 @UiController("mtensmp_LoginScreen")
 @UiDescriptor("login-screen.xml")
@@ -65,10 +63,7 @@ public class LoginScreen extends Screen {
     private UiLoginProperties loginProperties;
 
     @Autowired
-    private MultitenancyProperties multitenancyProperties;
-
-    @Autowired
-    private TenantEntityOperation tenantEntityOperation;
+    private MultitenancyUsernameSupport multitenancyUsernameSupport;
 
     @Autowired
     private UrlRouting urlRouting;
@@ -116,16 +111,7 @@ public class LoginScreen extends Screen {
                     .show();
             return;
         }
-
-        String tenantId = null;
-        Map<String, String> params = urlRouting.getState().getParams();
-        if (multitenancyProperties.isAuthenticationByTenantParamEnabled() && params != null) {
-            tenantId = params.get(multitenancyProperties.getTenantIdUrlParamName());
-        }
-        if (tenantId != null) {
-            username = String.format("%s%s%s", tenantId, "\\", username);
-        }
-
+        username = multitenancyUsernameSupport.getMultitenancyUsername(username, urlRouting.getState().getParams());
         try {
             authenticationSupport.authenticate(
                     AuthDetails.of(username, password)

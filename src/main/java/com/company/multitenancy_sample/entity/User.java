@@ -1,6 +1,5 @@
 package com.company.multitenancy_sample.entity;
 
-import io.jmix.core.annotation.TenantId;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.SystemLevel;
 import io.jmix.core.metamodel.annotation.DependsOnProperties;
@@ -24,9 +23,12 @@ import java.util.UUID;
 public class User implements JmixUserDetails, TenantSupport {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     @JmixGeneratedValue
     private UUID id;
+
+    @Column(name = "TENANT_ID")
+    private String tenantId;
 
     @Version
     @Column(name = "VERSION", nullable = false)
@@ -45,10 +47,6 @@ public class User implements JmixUserDetails, TenantSupport {
     @Column(name = "LAST_NAME")
     protected String lastName;
 
-    @TenantId
-    @Column(name = "TENANT_ATTRIBUTE")
-    protected String tenantAttribute;
-
     @Email
     @Column(name = "EMAIL")
     protected String email;
@@ -58,6 +56,15 @@ public class User implements JmixUserDetails, TenantSupport {
 
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
+
+    @Override
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
     public UUID getId() {
         return id;
@@ -159,18 +166,5 @@ public class User implements JmixUserDetails, TenantSupport {
     public String getDisplayName() {
         return String.format("%s %s [%s]", (firstName != null ? firstName : ""),
                 (lastName != null ? lastName : ""), username).trim();
-    }
-
-    public String getTenantAttribute() {
-        return tenantAttribute;
-    }
-
-    public void setTenantAttribute(String tenantAttribute) {
-        this.tenantAttribute = tenantAttribute;
-    }
-
-    @Override
-    public String getTenantId() {
-        return tenantAttribute;
     }
 }

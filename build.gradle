@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'org.springframework.boot'
 
 jmix {
-    bomVersion = '1.1.0-SNAPSHOT'
+    bomVersion = '1.0.0-SNAPSHOT'
     projectId = 'mtensmp'
 }
 
@@ -15,7 +15,8 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
-    mavenCentral()
+    mavenLocal()
+    mavenCentral() 
     maven {
         url 'https://nexus.jmix.io/repository/public'
     } 

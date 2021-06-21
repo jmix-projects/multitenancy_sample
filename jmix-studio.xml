@@ -2,6 +2,23 @@
 <project version="4">
   <component name="JmixDataStoreSettingsManager">
     <moduleSettings>
+      <entry key="com.company.multitenancy_sample.main">
+        <ModuleSettings>
+          <option name="dataStoreOptions">
+            <map>
+              <entry key="main">
+                <value>
+                  <DataStoreSettings>
+                    <option name="supportedTypes">
+                      <option value="hsql" />
+                    </option>
+                  </DataStoreSettings>
+                </value>
+              </entry>
+            </map>
+          </option>
+        </ModuleSettings>
+      </entry>
       <entry key="multitenancy_sample.main">
         <ModuleSettings>
           <option name="dataStoreOptions">

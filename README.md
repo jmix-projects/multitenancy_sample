@@ -30,79 +30,38 @@ Steps for getting multitenancy project from empty Jmix project:
     }
 ```
 
-4. Add following code in the end onBeforeCommit handler from UserEdit class
+4. Add method in UserEdit class
 
 ```java
-    User editedEntity=getEditedEntity();
-    String tenantId=editedEntity.getTenantId();
-    if(!Strings.isBlank(tenantId)&&!editedEntity.getUsername().contains(tenantId.trim())){
-        editedEntity.setUsername(String.format("%s%s%s",tenantId,"\\",editedEntity.getUsername()));
+    @Subscribe("tenantIdField")
+    public void onTenantIdFieldValueChange(HasValue.ValueChangeEvent<String> event) {
+        usernameField.setValue(multitenancyUsernameSupport.getMultitenancyUsername(usernameField.getValue(), event.getValue()));
     }
 ```
 
-5. Add method in UserEdit class
-
-```java
-    @Subscribe
-    public void onAfterShow(AfterShowEvent event){
-        String tenantId=getEditedEntity().getTenantId();
-        if(tenantId!=null){
-            usernameField.setValue(getEditedEntity().getUsername().replace(tenantId+"\\",""));
-        }
-    }
-```
-
-6. Add following code in UserBrowse class
+5. Add following code in LoginScreen class
 
 ```java
     @Autowired
-    private GroupTable<User> usersTable;
-    @Subscribe
-    public void onBeforeShow(BeforeShowEvent event){
-        Table.Column<User> username=usersTable.getColumn("username");
-        if(username==null){
-            return;
-        }
-        username.setValueProvider(user->{
-            String tenantId=user.getTenantId();
-            if(tenantId!=null){
-                return user.getUsername().replace(tenantId+"\\","");
-            }
-            return user.getUsername();
-        });
-    }
-```
-
-7. Add following code in LoginScreen class
-
-```java
-    @Autowired
-    private MultitenancyProperties multitenancyProperties;
+    private MultitenancyUsernameSupport multitenancyUsernameSupport;
 
     @Autowired
     private UrlRouting urlRouting;
 ```
 
-8. Add code into 'login' method from LoginScreen class before try-catch block
+6. Add code into 'login' method from LoginScreen class before try-catch block
 
 ```java
-    String tenantId=null;
-    Map<String, String> params=urlRouting.getState().getParams();
-    if(multitenancyProperties.isAuthenticationByTenantParamEnabled()&&params!=null){
-        tenantId=params.get(multitenancyProperties.getTenantIdUrlParamName());
-    }
-    if(tenantId!=null){
-        username=String.format("%s%s%s",tenantId,"\\",username);
-    }
+    username = multitenancyUsernameSupport.getMultitenancyUsername(username, urlRouting.getState().getParams());
 ```
 
-9. Add combobox for tenant in user-edit.xml
+7. Add combobox for tenant in user-edit.xml
 
 ```xml
     <comboBox id="tenantIdField" property="tenantAttribute"/>
 ```
 
-10. Add code in UserEdit class
+8. Add code in UserEdit class
 
 ```java
     @Autowired
@@ -120,31 +79,10 @@ Steps for getting multitenancy project from empty Jmix project:
     }
 ```
 
-11. Add column into table in user-browse.xml
+9. Add column into table in user-browse.xml
 
 ```xml
     <column id="tenantAttribute"/>
-```
-
-12. Add code in UserBrowse class
-
-```java
-    @Autowired
-    private GroupTable<User> usersTable;
-    @Subscribe
-    public void onBeforeShow(BeforeShowEvent event){
-        Table.Column<User> username=usersTable.getColumn("username");
-        if(username==null){
-            return;
-        }
-        username.setValueProvider(user->{
-           String tenantId=user.getTenantId();
-           if(tenantId!=null){
-               return user.getUsername().replace(tenantId+"\\","");
-           }
-          return user.getUsername();
-        });
-    }
 ```
 
 Now you can run your application, create tenant-specific entities, create roles for the entities, assignment roles for

@@ -4,13 +4,14 @@ import com.company.multitenancy_sample.entity.User;
 import io.jmix.core.DataManager;
 import io.jmix.core.EntityStates;
 import io.jmix.multitenancy.entity.Tenant;
+import io.jmix.multitenancyui.helper.MultitenancyUsernameSupport;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.component.ComboBox;
+import io.jmix.ui.component.HasValue;
 import io.jmix.ui.component.PasswordField;
 import io.jmix.ui.component.TextField;
 import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -50,6 +51,9 @@ public class UserEdit extends StandardEditor<User> {
     @Autowired
     private MessageBundle messageBundle;
 
+    @Autowired
+    private MultitenancyUsernameSupport multitenancyUsernameSupport;
+
     @Subscribe
     public void onInitEntity(InitEntityEvent<User> event) {
         usernameField.setEditable(true);
@@ -69,14 +73,6 @@ public class UserEdit extends StandardEditor<User> {
     }
 
     @Subscribe
-    public void onAfterShow(AfterShowEvent event) {
-        String tenantId = getEditedEntity().getTenantAttribute();
-        if (tenantId != null) {
-            usernameField.setValue(getEditedEntity().getUsername().replace(tenantId+"\\",""));
-        }
-    }
-
-    @Subscribe
     protected void onBeforeCommit(BeforeCommitChangesEvent event) {
         if (entityStates.isNew(getEditedEntity())) {
             if (!Objects.equals(passwordField.getValue(), confirmPasswordField.getValue())) {
@@ -87,10 +83,12 @@ public class UserEdit extends StandardEditor<User> {
             }
             getEditedEntity().setPassword(passwordEncoder.encode(passwordField.getValue()));
         }
-        User editedEntity = getEditedEntity();
-        String tenantId = editedEntity.getTenantAttribute();
-        if (!Strings.isBlank(tenantId) && !editedEntity.getUsername().contains(tenantId.trim())) {
-            editedEntity.setUsername(String.format("%s%s%s", tenantId, "\\", editedEntity.getUsername()));
-        }
     }
+
+    @Subscribe("tenantIdField")
+    public void onTenantIdFieldValueChange(HasValue.ValueChangeEvent<String> event) {
+        usernameField.setValue(multitenancyUsernameSupport.getMultitenancyUsername(usernameField.getValue(), event.getValue()));
+    }
+
+
 }
