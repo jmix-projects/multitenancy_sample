@@ -39,7 +39,7 @@
                 <textField id="firstNameField" property="firstName"/>
                 <textField id="lastNameField" property="lastName"/>
                 <textField id="emailField" property="email"/>
-                <comboBox id="tenantIdField" property="tenantId"/>
+                <comboBox id="tenantIdField" property="tenantId" editable="false"/>
                 <checkBox id="enabledField" property="enabled"/>
             </column>
         </form>

@@ -57,6 +57,7 @@ public class UserEdit extends StandardEditor<User> {
         usernameField.setEditable(true);
         passwordField.setVisible(true);
         confirmPasswordField.setVisible(true);
+        tenantIdField.setEditable(true);
     }
 
     @Subscribe
