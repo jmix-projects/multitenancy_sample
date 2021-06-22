@@ -3,8 +3,7 @@ package com.company.multitenancy_sample.screen.user;
 import com.company.multitenancy_sample.entity.User;
 import io.jmix.core.DataManager;
 import io.jmix.core.EntityStates;
-import io.jmix.multitenancy.entity.Tenant;
-import io.jmix.multitenancyui.helper.MultitenancyUsernameSupport;
+import io.jmix.multitenancyui.MultitenancyUiSupport;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.component.ComboBox;
 import io.jmix.ui.component.HasValue;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @UiController("mtensmp_User.edit")
 @UiDescriptor("user-edit.xml")
@@ -52,7 +50,7 @@ public class UserEdit extends StandardEditor<User> {
     private MessageBundle messageBundle;
 
     @Autowired
-    private MultitenancyUsernameSupport multitenancyUsernameSupport;
+    private MultitenancyUiSupport multitenancyUiSupport;
 
     @Subscribe
     public void onInitEntity(InitEntityEvent<User> event) {
@@ -63,13 +61,7 @@ public class UserEdit extends StandardEditor<User> {
 
     @Subscribe
     public void onInit(InitEvent event) {
-        tenantIdField.setOptionsList(dataManager.load(Tenant.class)
-                .query("select t from mten_Tenant t")
-                .list()
-                .stream()
-                .map(Tenant::getTenantId)
-                .collect(Collectors.toList())
-        );
+        tenantIdField.setOptionsList(multitenancyUiSupport.getTenantOptions());
     }
 
     @Subscribe
@@ -87,8 +79,6 @@ public class UserEdit extends StandardEditor<User> {
 
     @Subscribe("tenantIdField")
     public void onTenantIdFieldValueChange(HasValue.ValueChangeEvent<String> event) {
-        usernameField.setValue(multitenancyUsernameSupport.getMultitenancyUsername(usernameField.getValue(), event.getValue()));
+        usernameField.setValue(multitenancyUiSupport.getUsernameByTenant(usernameField.getValue(), event.getValue()));
     }
-
-
 }

@@ -3,7 +3,7 @@ package com.company.multitenancy_sample.screen.login;
 import io.jmix.core.CoreProperties;
 import io.jmix.core.MessageTools;
 import io.jmix.core.Messages;
-import io.jmix.multitenancyui.helper.MultitenancyUsernameSupport;
+import io.jmix.multitenancyui.MultitenancyUiSupport;
 import io.jmix.securityui.authentication.AuthDetails;
 import io.jmix.securityui.authentication.LoginScreenSupport;
 import io.jmix.ui.Notifications;
@@ -63,7 +63,7 @@ public class LoginScreen extends Screen {
     private UiLoginProperties loginProperties;
 
     @Autowired
-    private MultitenancyUsernameSupport multitenancyUsernameSupport;
+    private MultitenancyUiSupport multitenancyUiSupport;
 
     @Autowired
     private UrlRouting urlRouting;
@@ -111,7 +111,7 @@ public class LoginScreen extends Screen {
                     .show();
             return;
         }
-        username = multitenancyUsernameSupport.getMultitenancyUsername(username, urlRouting.getState().getParams());
+        username = multitenancyUiSupport.getUsernameByUrl(username, urlRouting);
         try {
             authenticationSupport.authenticate(
                     AuthDetails.of(username, password)
