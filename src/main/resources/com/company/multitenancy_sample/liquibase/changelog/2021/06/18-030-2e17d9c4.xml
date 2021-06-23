@@ -10,7 +10,7 @@
         <insert tableName="MTENSMP_USER" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="1f5b7c03-bcfa-4956-80ff-e89b1ebfa3b1"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant1\tenant_admin"/>
+            <column name="USERNAME" value="tenant1|tenant_admin"/>
             <column name="PASSWORD" value="{noop}tenant_admin"/>
             <column name="TENANT_ID" value="tenant1"/>
             <column name="ENABLED" valueBoolean="true"/>
@@ -19,7 +19,7 @@
         <insert tableName="MTENSMP_USER" dbms="oracle, mysql, mariadb">
             <column name="ID" value="1f5b7c03bcfa495680ffe89b1ebfa3b1"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant1\tenant_admin"/>
+            <column name="USERNAME" value="tenant1|tenant_admin"/>
             <column name="PASSWORD" value="{noop}tenant_admin"/>
             <column name="TENANT_ID" value="tenant1"/>
             <column name="ENABLED" valueBoolean="true"/>
@@ -28,7 +28,7 @@
         <insert tableName="MTENSMP_USER" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="48b34039-a31f-44df-810a-8f3faaddf413"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant_admin"/>
+            <column name="USERNAME" value="tenant2|tenant_admin"/>
             <column name="PASSWORD" value="{noop}tenant_admin"/>
             <column name="TENANT_ID" value="tenant2"/>
             <column name="ENABLED" valueBoolean="true"/>
@@ -37,7 +37,7 @@
         <insert tableName="MTENSMP_USER" dbms="oracle, mysql, mariadb">
             <column name="ID" value="48b34039a31f44df810a8f3faaddf413"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant_admin"/>
+            <column name="USERNAME" value="tenant2|tenant_admin"/>
             <column name="PASSWORD" value="{noop}tenant_admin"/>
             <column name="TENANT_ID" value="tenant2"/>
             <column name="ENABLED" valueBoolean="true"/>
@@ -46,7 +46,7 @@
         <insert tableName="MTENSMP_USER" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="c72b8140-6513-423b-9006-118f2f78b88d"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant1\tenant"/>
+            <column name="USERNAME" value="tenant1|tenant"/>
             <column name="PASSWORD" value="{noop}tenant"/>
             <column name="TENANT_ID" value="tenant1"/>
             <column name="ENABLED" valueBoolean="true"/>
@@ -55,7 +55,7 @@
         <insert tableName="MTENSMP_USER" dbms="oracle, mysql, mariadb">
             <column name="ID" value="c72b81406513423b9006118f2f78b88d"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant1\tenant"/>
+            <column name="USERNAME" value="tenant1|tenant"/>
             <column name="PASSWORD" value="{noop}tenant"/>
             <column name="TENANT_ID" value="tenant1"/>
             <column name="ENABLED" valueBoolean="true"/>
@@ -64,7 +64,7 @@
         <insert tableName="MTENSMP_USER" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="b318df87-2b34-48d9-ad29-58e9b5c47cb2"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant"/>
+            <column name="USERNAME" value="tenant2|tenant"/>
             <column name="PASSWORD" value="{noop}tenant"/>
             <column name="TENANT_ID" value="tenant2"/>
             <column name="ENABLED" valueBoolean="true"/>
@@ -73,7 +73,7 @@
         <insert tableName="MTENSMP_USER" dbms="oracle, mysql, mariadb">
             <column name="ID" value="b318df872b3448d9ad2958e9b5c47cb2"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant"/>
+            <column name="USERNAME" value="tenant2|tenant"/>
             <column name="PASSWORD" value="{noop}tenant"/>
             <column name="TENANT_ID" value="tenant2"/>
             <column name="ENABLED" valueBoolean="true"/>
@@ -84,7 +84,6 @@
             <column name="VERSION" value="1"/>
             <column name="TENANT_ID" value="tenant1"/>
             <column name="NAME" value="Tenant 1"/>
-            <column name="ADMIN_USERNAME" value="tenant_admin"/>
         </insert>
 
         <insert tableName="MTEN_TENANT" dbms="oracle, mysql, mariadb">
@@ -92,7 +91,6 @@
             <column name="VERSION" value="1"/>
             <column name="TENANT_ID" value="tenant1"/>
             <column name="NAME" value="Tenant 1"/>
-            <column name="ADMIN_USERNAME" value="tenant_admin"/>
         </insert>
 
         <insert tableName="MTEN_TENANT" dbms="postgresql, mssql, hsqldb">
@@ -100,7 +98,6 @@
             <column name="VERSION" value="1"/>
             <column name="TENANT_ID" value="tenant2"/>
             <column name="NAME" value="Tenant 2"/>
-            <column name="ADMIN_USERNAME" value="tenant_admin"/>
         </insert>
 
         <insert tableName="MTEN_TENANT" dbms="oracle, mysql, mariadb">
@@ -108,7 +105,6 @@
             <column name="VERSION" value="1"/>
             <column name="TENANT_ID" value="tenant2"/>
             <column name="NAME" value="Tenant 2"/>
-            <column name="ADMIN_USERNAME" value="tenant_admin"/>
         </insert>
 
         <insert tableName="MTENSMP_TEST_TENANT_ENTITY" dbms="postgresql, mssql, hsqldb">
@@ -149,7 +145,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="678d1ad8-b106-4106-abb5-3ff7a97531ba"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant1\tenant"/>
+            <column name="USERNAME" value="tenant1|tenant"/>
             <column name="ROLE_CODE" value="test-tenant-access"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -157,7 +153,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="oracle, mysql, mariadb">
             <column name="ID" value="678d1ad8b1064106abb53ff7a97531ba"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant1\tenant"/>
+            <column name="USERNAME" value="tenant1|tenant"/>
             <column name="ROLE_CODE" value="test-tenant-access"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -165,7 +161,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="2c724784-56cd-4e13-ab3f-be49f6a232c6"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant1\tenant_admin"/>
+            <column name="USERNAME" value="tenant1|tenant_admin"/>
             <column name="ROLE_CODE" value="test-tenant-access"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -173,7 +169,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="oracle, mysql, mariadb">
             <column name="ID" value="2c72478456cd4e13ab3fe49f6a232c6"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant_admin"/>
+            <column name="USERNAME" value="tenant2|tenant_admin"/>
             <column name="ROLE_CODE" value="test-tenant-access"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -181,7 +177,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="6f91c97e-24ef-471d-b7cf-da45766d69aa"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant"/>
+            <column name="USERNAME" value="tenant2|tenant"/>
             <column name="ROLE_CODE" value="test-tenant-access"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -189,7 +185,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="oracle, mysql, mariadb">
             <column name="ID" value="6f91c97e24ef471db7cfda45766d69aa"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant"/>
+            <column name="USERNAME" value="tenant2|tenant"/>
             <column name="ROLE_CODE" value="test-tenant-access"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -197,7 +193,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="c9424254-a80c-44a1-8672-a6f43947b89f"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant_admin"/>
+            <column name="USERNAME" value="tenant2|tenant_admin"/>
             <column name="ROLE_CODE" value="test-tenant-access"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -205,7 +201,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="oracle, mysql, mariadb">
             <column name="ID" value="c9424254a80c44a18672a6f43947b89f"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant_admin"/>
+            <column name="USERNAME" value="tenant2|tenant_admin"/>
             <column name="ROLE_CODE" value="test-tenant-access"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -213,7 +209,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="9240729d-9422-410f-9185-ce77f454027f"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant_admin"/>
+            <column name="USERNAME" value="tenant2|tenant_admin"/>
             <column name="ROLE_CODE" value="ui-minimal"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -221,7 +217,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="oracle, mysql, mariadb">
             <column name="ID" value="9240729d9422410f9185ce77f454027f"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant_admin"/>
+            <column name="USERNAME" value="tenant2|tenant_admin"/>
             <column name="ROLE_CODE" value="ui-minimal"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -229,7 +225,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="a8369dc8-bade-48e5-ae46-9fbfdde150fe"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant1\tenant_admin"/>
+            <column name="USERNAME" value="tenant1|tenant_admin"/>
             <column name="ROLE_CODE" value="ui-minimal"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -237,7 +233,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="oracle, mysql, mariadb">
             <column name="ID" value="a8369dc8bade48e5ae469fbfdde150fe"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant1\tenant_admin"/>
+            <column name="USERNAME" value="tenant1|tenant_admin"/>
             <column name="ROLE_CODE" value="ui-minimal"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -245,7 +241,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="a67eaca4-1bc1-4639-b48c-80bd50897793"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant"/>
+            <column name="USERNAME" value="tenant2|tenant"/>
             <column name="ROLE_CODE" value="ui-minimal"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -253,7 +249,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="oracle, mysql, mariadb">
             <column name="ID" value="a67eaca41bc14639b48c80bd50897793"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant2\tenant"/>
+            <column name="USERNAME" value="tenant2|tenant"/>
             <column name="ROLE_CODE" value="ui-minimal"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -261,7 +257,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="postgresql, mssql, hsqldb">
             <column name="ID" value="edc0011a-c6b6-492d-b9d8-dfe17f5ef228"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant1\tenant"/>
+            <column name="USERNAME" value="tenant1|tenant"/>
             <column name="ROLE_CODE" value="ui-minimal"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
@@ -269,7 +265,7 @@
         <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="oracle, mysql, mariadb">
             <column name="ID" value="edc0011ac6b6492db9d8dfe17f5ef228"/>
             <column name="VERSION" value="1"/>
-            <column name="USERNAME" value="tenant1\tenant"/>
+            <column name="USERNAME" value="tenant1|tenant"/>
             <column name="ROLE_CODE" value="ui-minimal"/>
             <column name="ROLE_TYPE" value="resource"/>
         </insert>
